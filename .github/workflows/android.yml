@@ -43,3 +43,11 @@ jobs:
           files: app/build/outputs/apk/debug/app-debug.apk
           name: millenium-for-reddit Debug Apk
           tag_name: release
+    - uses: actions/checkout@master
+    
+    - name: Send APK to discord channel
+      uses: sinshutu/upload-to-discord@master
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      with:
+        args: app/build/outputs/apk/debug/app-debug.apk
