@@ -22,4 +22,4 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: './app/build/outputs/apk/debug/app-debug.apk'
+          args: "./app/build/outputs/apk/debug/app-debug.apk"
