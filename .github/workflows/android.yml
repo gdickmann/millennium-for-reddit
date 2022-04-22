@@ -16,10 +16,15 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Send APK to discord channel
-        uses: sinshutu/upload-to-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: "./app/build/outputs/apk/debug/app-debug.apk"
+    steps:    
+    - name: Discord notification
+      uses: LeGitHubDeTai/github-to-discord@main
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: Tai Studio
+        DISCORD_AVATAR: https://raw.githubusercontent.com/LeGitHubDeTai/github-to-discord/main/icon.png
+        MESSAGE_TITLE: New Version
+        MESSAGE_DESCRIPTION: New Apk Released!
+        MESSAGE_URL: https://github.com/Biscoitinhoo/millennium-for-reddit/releases/download/release/app-debug.apk
+        MESSAGE_COLOR: 5814783
+
