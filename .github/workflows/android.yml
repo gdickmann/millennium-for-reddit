@@ -2,13 +2,9 @@ name: Android CI
 
 on:
   workflow_dispatch:
-  pull_request_target:
-    types:
-      - closed
-
-#  push:
-#    branches: [ master ]
-
+  push:
+    branches:
+      - master
 
 jobs:
   apk:
@@ -24,30 +20,33 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-        
+
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-    
+
     - name: Build debug apk
       run:  chmod +x gradlew && ./gradlew assembleDebug --stacktrace
-    
+
     - name: Upload Apk
       uses: actions/upload-artifact@v1
       with:
         name: app
         path: app/build/outputs/apk/debug/app-debug.apk
-        
+
     - name: Release Apk
       uses: softprops/action-gh-release@v1
       with:
           files: app/build/outputs/apk/debug/app-debug.apk
           name: millenium-for-reddit Debug Apk
           tag_name: release
-    - uses: actions/checkout@master
     
-    - name: Send APK to discord channel
-      uses: sinshutu/upload-to-discord@master
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+    - name: send debug apk to discord.
+      uses: appleboy/discord-action@master
       with:
-        args: app/build/outputs/apk/debug/app-debug.apk
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        args: New Apk Released.
+        color: "#008080"
+        avatar_url: "https://cdn.vox-cdn.com/thumbor/-_iz84sxjFk1L4JHRwhY6TCdu9o=/0x0:2040x1560/920x613/filters:focal(857x617:1183x943):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/65088839/Android_logo_stacked__RGB_.5.jpg"
+        username: "Discord Release Bot"
+        file: "./app/build/outputs/apk/debug/app-debug.apk"
