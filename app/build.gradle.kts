@@ -48,5 +48,5 @@ dependencies {
     // Gson
     implementation("com.squareup.retrofit2:converter-gson:2.5.0")
     // Material Design
-    implementation("com.google.android.material:material:1.7.0-alpha01")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha10")
 }
